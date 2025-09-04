@@ -1,4 +1,6 @@
 ﻿using AgarIOSiphome.System.Configs;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -12,9 +14,14 @@ namespace AgarIOSiphome.Networking.Configs
         [SerializeField] private ushort _port = 7777;
         [SerializeField] private NetworkManager _prefabNetworkManager;
 
+        [Header("Network handlers")]
+        [SerializeField] private NetworkBehaviour[] _networkHandlersPrefabs;
+
         public string DefaultPlayerName => _defaultPlayerName;
         public ushort Port => _port;
 
         public NetworkManager PrefabNetworkManager => _prefabNetworkManager;
+
+        public IEnumerable<NetworkBehaviour> NetworkHandlersPrefabs => _networkHandlersPrefabs;
     }
 }

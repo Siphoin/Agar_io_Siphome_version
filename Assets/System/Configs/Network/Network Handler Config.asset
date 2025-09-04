@@ -16,3 +16,5 @@ MonoBehaviour:
   _defaultPlayerName: Player
   _port: 4671
   _prefabNetworkManager: {fileID: -3212440288723206722, guid: e7436dff1d6d78445b2b8da337aa8434, type: 3}
+  _networkHandlersPrefabs:
+  - {fileID: -2484051009792902198, guid: 20eba49a7894ecc4a994c2c96511a0dc, type: 3}

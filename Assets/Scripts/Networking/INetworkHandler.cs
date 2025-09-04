@@ -7,8 +7,8 @@ namespace AGarIOSiphome.Networking
     {
         bool ConnectToHost(string ipAddress, string playerName);
         bool StartHost(string ipAddress);
-        void SpawnNetworkObject(NetworkObject networkObject, Vector3 position, Quaternion rotation);
-        void DespawnNetworkObject(NetworkObject networkObject);
+        void SpawnNetworkObject(GameObject gameObject, Vector3 position = default, Quaternion rotation = default);
+        void DespawnNetworkObject(GameObject gameObject);
         void Disconnect();
 
         public bool IsConnected { get; }

@@ -5,7 +5,7 @@ namespace AGarIOSiphome.Networking.Helpers
 {
     public static class NetworkObjectHelper
     {
-        public static void SafeSpawn(INetworkHandler networkManager, NetworkObject prefab,
+        public static void SafeSpawn(INetworkHandler networkManager, GameObject prefab,
             Vector3 position, Quaternion rotation)
         {
             if (networkManager is null || prefab is null) return;
@@ -13,7 +13,7 @@ namespace AGarIOSiphome.Networking.Helpers
             networkManager.SpawnNetworkObject(prefab, position, rotation);
         }
 
-        public static void SafeDespawn(INetworkHandler networkManager, NetworkObject networkObject)
+        public static void SafeDespawn(INetworkHandler networkManager, GameObject networkObject)
         {
             if (networkManager is null || networkObject is null) return;
 

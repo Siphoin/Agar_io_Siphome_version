@@ -13,6 +13,7 @@ namespace AGarIOSiphome.Networking
 
         private NetworkManager _networkManager;
         private string _currentPlayerName;
+        public static string SetedNickName { get; private set; }
 
         public bool IsConnected => _networkManager.IsListening;
         public bool IsHost => _networkManager.IsHost;
@@ -26,9 +27,13 @@ namespace AGarIOSiphome.Networking
                 StartHost("127.0.0.1");
             }
 
-            else
+            else if (!Application.isBatchMode && !Application.isEditor)
             {
+                ConnectToHost("127.0.0.1", string.Empty);
+            }
 
+            else if (Application.isEditor && !Application.isBatchMode)
+            {
                 ConnectToHost("127.0.0.1", string.Empty);
             }
         }
@@ -70,6 +75,7 @@ namespace AGarIOSiphome.Networking
             }
 
             _currentPlayerName = string.IsNullOrEmpty(playerName) ? _config.DefaultPlayerName : playerName;
+            SetedNickName = _currentPlayerName;
 
             return _networkManager.StartClient();
         }
@@ -83,41 +89,40 @@ namespace AGarIOSiphome.Networking
                 return false;
             }
 
-            return _networkManager.StartHost();
-        }
-        public void SpawnNetworkObject(NetworkObject networkObject, Vector3 position, Quaternion rotation)
-        {
-            if (networkObject is null)
+            bool isStarted = _networkManager.StartHost();
+            if (isStarted)
             {
-                Debug.LogError("NetworkObject cannot be null");
-                return;
+                SpawnHandlers();
             }
 
+            return isStarted;
+        }
+        public void SpawnNetworkObject(GameObject gameObject, Vector3 position = default, Quaternion rotation = default)
+        {
             if (!_networkManager.IsListening)
             {
                 Debug.LogError("Network is not running");
                 return;
             }
 
-            var instance = Instantiate(networkObject, position, rotation);
-            instance.Spawn();
+            var instance = Instantiate(gameObject, position, rotation);
+            instance.GetComponent<NetworkObject>().Spawn();
         }
 
-        public void DespawnNetworkObject(NetworkObject networkObject)
+        public void DespawnNetworkObject(GameObject gameObject)
         {
-            if (networkObject is null)
-            {
-                Debug.LogError("NetworkObject cannot be null");
-                return;
-            }
+            gameObject.GetComponent<NetworkObject>().Despawn();
+        }
 
-            if (!networkObject.IsSpawned)
+        private void SpawnHandlers ()
+        {
+            if (IsHost)
             {
-                Debug.LogWarning("NetworkObject is not spawned");
-                return;
+                foreach (var item in _config.NetworkHandlersPrefabs)
+                {
+                    SpawnNetworkObject(item.gameObject);
+                }
             }
-
-            networkObject.Despawn();
         }
 
         public void Disconnect()
