@@ -7,6 +7,7 @@ using System.Linq;
 using UniRx;
 using Unity.Collections;
 using Unity.Netcode;
+using UnityEngine;
 
 namespace AgarIOSiphome.Networking.Handlers
 {
@@ -60,7 +61,11 @@ namespace AgarIOSiphome.Networking.Handlers
                 : NetworkHandler.SetedNickName;
 
             var player = new NetworkPlayer(clientId, new FixedString32Bytes(nickName));
-            AddPlayerServerRpc(player);
+            if (clientId != NetworkManager.ServerClientId)
+            {
+                AddPlayerServerRpc(player);
+            }
+
         }
 
         private void HandleClientDisconnected(ulong clientId)
@@ -73,10 +78,7 @@ namespace AgarIOSiphome.Networking.Handlers
 
         public override void OnNetworkSpawn()
         {
-            if (IsServer)
-            {
-                HandleClientConnected(NetworkManager.LocalClientId);
-            }
+           HandleClientConnected(NetworkManager.LocalClientId);
         }
 
         private void HandlePlayersListChanged(NetworkListEvent<NetworkPlayer> changeEvent)
@@ -91,6 +93,7 @@ namespace AgarIOSiphome.Networking.Handlers
                     _onPlayerRemoved.OnNext(changeEvent.Value);
                     break;
             }
+
         }
 
         [ServerRpc(RequireOwnership = false)]
