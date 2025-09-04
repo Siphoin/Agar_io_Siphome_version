@@ -1,13 +1,13 @@
+using AgarIOSiphome.Core.Player.Configs;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace AgarIOSiphome.Core.Player.Components
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("Movement Settings")]
-        [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float keyboardMoveSpeed = 7f;
+        [Inject] private PlayerMovementConfig _config;
 
         private Vector2 _mousePosition;
         private Camera _mainCamera;
@@ -63,14 +63,14 @@ namespace AgarIOSiphome.Core.Player.Components
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 targetPosition,
-                moveSpeed * Time.deltaTime
+                _config.MoveSpeed * Time.deltaTime
             );
         }
 
         private void MoveWithKeyboard()
         {
             Vector3 movement = new Vector3(_keyboardInput.x, _keyboardInput.y, 0f) *
-                              keyboardMoveSpeed * Time.deltaTime;
+                              _config.KeyboardMoveSpeed * Time.deltaTime;
 
             transform.Translate(movement);
         }
