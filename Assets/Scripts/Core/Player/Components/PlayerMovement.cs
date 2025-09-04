@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace AgarIOSiphome.Player.Components
+namespace AgarIOSiphome.Core.Player.Components
 {
     public class PlayerMovement : MonoBehaviour
     {

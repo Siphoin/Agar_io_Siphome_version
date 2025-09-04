@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7614a1c3564bdf54a9527ba906c2260f, type: 3}
+  m_Name: Network Handler Config
+  m_EditorClassIdentifier: 
+  _guidObject: 6667bfb7-1483-481a-a895-7f416acba753
+  _defaultPlayerName: Player
+  _port: 4671
+  _prefabNetworkManager: {fileID: -3212440288723206722, guid: e7436dff1d6d78445b2b8da337aa8434, type: 3}
