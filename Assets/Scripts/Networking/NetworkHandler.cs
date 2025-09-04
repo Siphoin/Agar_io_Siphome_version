@@ -97,16 +97,17 @@ namespace AGarIOSiphome.Networking
 
             return isStarted;
         }
-        public void SpawnNetworkObject(GameObject gameObject, Vector3 position = default, Quaternion rotation = default)
+        public GameObject SpawnNetworkObject(GameObject gameObject, Vector3 position = default, Quaternion rotation = default)
         {
             if (!_networkManager.IsListening)
             {
                 Debug.LogError("Network is not running");
-                return;
+                return null;
             }
 
             var instance = Instantiate(gameObject, position, rotation);
             instance.GetComponent<NetworkObject>().Spawn();
+            return instance.gameObject;
         }
 
         public void DespawnNetworkObject(GameObject gameObject)

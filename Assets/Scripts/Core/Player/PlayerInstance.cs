@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AgarIOSiphome.Core.Player
 {
     [RequireComponent(typeof(PlayerMovement))]
-    public class PlayerInstance : MonoBehaviour
+    public class PlayerInstance : MonoBehaviour, IPlayerInstance
     {
     }
 }

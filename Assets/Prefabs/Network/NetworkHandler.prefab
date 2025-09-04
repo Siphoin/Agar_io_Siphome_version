@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3670957378452886760}
   - component: {fileID: 6670144312846910076}
   m_Layer: 0
-  m_Name: NetwoekHandler
+  m_Name: NetworkHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

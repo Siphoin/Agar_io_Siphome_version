@@ -1,17 +1,26 @@
 using AgarIOSiphome.Core.Player.Configs;
+using AGarIOSiphome.Networking;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
 namespace AgarIOSiphome.Core.Player.Components
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : NetworkBehaviour
     {
         [Inject] private PlayerMovementConfig _config;
-
+        [Inject] private INetworkHandler _network;
         private Vector2 _mousePosition;
         private Camera _mainCamera;
         private Vector2 _keyboardInput;
+
+       
+
+        public override void OnNetworkSpawn()
+        {
+            enabled = IsOwner;
+        }
 
         private void Start()
         {
@@ -20,6 +29,10 @@ namespace AgarIOSiphome.Core.Player.Components
 
         private void Update()
         {
+            if (IsHost)
+            {
+                return;
+            }
             HandleInput();
             HandleMovement();
         }
