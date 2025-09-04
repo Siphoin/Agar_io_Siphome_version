@@ -23,7 +23,7 @@ namespace AGarIOSiphome.Networking
         {
             if (Application.isBatchMode)
             {
-                StartHost();
+                StartHost("127.0.0.1");
             }
 
             else
@@ -33,19 +33,20 @@ namespace AGarIOSiphome.Networking
             }
         }
 
-        private void SetupNetworkManager()
+        private void SetupNetworkManager(string ipAddress)
         {
-            CreateNetwoorkManager();
+            CreateNetwoorkManager(ipAddress);
             SubscribeToNetworkEvents();
         }
 
-        private void CreateNetwoorkManager()
+        private void CreateNetwoorkManager(string ipAddress)
         {
             if (_networkManager != null)
             {
                 Destroy(_networkManager.gameObject);
             }
             _networkManager = Instantiate(_config.PrefabNetworkManager);
+            _networkManager.GetComponent<UnityTransport>().SetConnectionData(ipAddress, _config.Port);
         }
 
         private void OnDestroy()
@@ -55,7 +56,7 @@ namespace AGarIOSiphome.Networking
 
         public bool ConnectToHost(string ipAddress, string playerName)
         {
-            SetupNetworkManager();
+            SetupNetworkManager(ipAddress);
             if (_networkManager.IsListening)
             {
                 Debug.LogWarning("Network manager is already running");
@@ -70,15 +71,12 @@ namespace AGarIOSiphome.Networking
 
             _currentPlayerName = string.IsNullOrEmpty(playerName) ? _config.DefaultPlayerName : playerName;
 
-            _networkManager.NetworkConfig.ConnectionData = System.Text.Encoding.UTF8.GetBytes(_currentPlayerName);
-            _networkManager.GetComponent<UnityTransport>().SetConnectionData(ipAddress, _config.Port);
-
             return _networkManager.StartClient();
         }
 
-        public bool StartHost()
+        public bool StartHost(string ipAddress)
         {
-            SetupNetworkManager();
+            SetupNetworkManager(ipAddress);
             if (_networkManager.IsListening)
             {
                 Debug.LogWarning("Network manager is already running");
