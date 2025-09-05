@@ -1,4 +1,5 @@
 ﻿using AGarIOSiphome.Networking;
+using AGarIOSiphome.Networking.Handlers;
 using System;
 using UniRx;
 using UnityEngine;
@@ -19,10 +20,13 @@ namespace AgarIOSiphome.Core.Player.Factories
 
             if (newObject != null)
             {
-                _onSpawn.OnNext(newObject.GetComponent<PlayerInstance>());
+                var player = newObject.GetComponent<PlayerInstance>();
+                _onSpawn.OnNext(player);
+                return player;
             }
 
-            return newObject.GetComponent<PlayerInstance>();
+            return null;
+
         }
     }
 }

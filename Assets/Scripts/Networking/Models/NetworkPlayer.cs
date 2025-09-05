@@ -16,8 +16,6 @@ namespace AgarIOSiphome.Networking.Models
 
         private static readonly MessagePackFormatter _formatter = new();
 
-        public bool IsEmpty => false;
-
         public NetworkPlayer(ulong clientId, FixedString32Bytes nickName)
         {
             ClientId = clientId;

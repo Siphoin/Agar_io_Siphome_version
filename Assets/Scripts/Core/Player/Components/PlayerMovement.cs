@@ -1,5 +1,6 @@
 using AgarIOSiphome.Core.Player.Configs;
 using AGarIOSiphome.Networking;
+using AGarIOSiphome.Networking.Handlers;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;

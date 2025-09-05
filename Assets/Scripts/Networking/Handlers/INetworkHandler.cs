@@ -1,7 +1,9 @@
-﻿using Unity.Netcode;
+﻿using System;
+using UniRx;
+using Unity.Netcode;
 using UnityEngine;
 
-namespace AGarIOSiphome.Networking
+namespace AGarIOSiphome.Networking.Handlers
 {
     public interface INetworkHandler
     {
@@ -15,5 +17,10 @@ namespace AGarIOSiphome.Networking
         public bool IsHost { get; }
         public bool IsClient { get; }
         public string CurrentPlayerName { get; }
+
+        IObservable<Unit> OnConnected { get; }
+        IObservable<Unit> OnDisconnected { get; }
+        IObservable<string> OnConnectionError { get; }
+        INetworkObjectSpawnHandler SpawnHandler { get; }
     }
 }
